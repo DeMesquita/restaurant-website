@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Pratos</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+</head>
+<body>
+	<table class="table">
+	  <thead>
+	    <tr >
+	      <th >Cod</th>
+	      <th >Nome</th>
+	      <th >Preço</th>
+	      
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr th:each = "prato : ${listaDePratos}">
+		  <td th:text = "${prato.cod}"> </td>
+	      <td th:text = "${prato.nome}"> </td>
+	      <td th:text = "${prato.valor}"> </td>
+	      <td>  <a class="btn btn-success" th:href="@{/prato/addCarrinho/{codigo}(codigo = ${prato.cod})}"> Add Carrinho </a></td>
+	      <td > <a th:href="@{/prato/excluir/{codigo}(codigo = ${prato.cod})}"> <button type="button" class="btn btn-danger">Excluir</button></a></td>
+		  <td> <a class="btn btn-primary" th:href="@{/prato/atualizar/{codigo}(codigo = ${prato.cod})}"> Atualizar </a></td>
+		  <td> <img width="200" height="200" th:src="@{'/images/'+${prato.nome}+.png}"> </td>	    
+		</tr>
+	   
+	  </tbody>
+	</table>
+	
+	
+		<script src="/js/bootstrap.min.js"> </script>
+	
+</body>
+</html>

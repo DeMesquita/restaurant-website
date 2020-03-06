@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Carrinho</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+</head>
+<body>
+
+	<div class="card text-center">
+			<div class="card-header">
+			    			    <h5 class="card-title">	 Carrinho  </h5>
+			  </div>
+			  <div class="card-body" >
+			   <table  class="table table-hover">
+			  		<thead class="thead-dark">
+				    <tr>
+				      <th >FOTO</th>
+				      <th >Nome</th>
+				      <th >Preço</th>
+				      <th >Quantidade</th>
+				      <th >Subtotal</th>
+				      <th >Opção</th>
+				      
+				    </tr>
+				  </thead>
+			 	  <tbody > <!--th:set="{total}(total = 0) th:set ="{total} (total = total + item.prato.valor * item.quatidade ) ""-->
+				    
+				    <tr  th:each = "item : ${session.carrinho}" >
+					     <td> <img width="100" height="100" th:src="@{'/images/'+${item.prato.nome}+.png}"> </td>
+					     <td th:text = "${item.prato.nome}"> </td>
+						 <td th:text = "${item.prato.valor}"> </td>
+					     <td th:text = "${item.quantidade}"> </td>
+					     <td th:text = "${item.prato.valor * item.quantidade}"> </td>
+					     <td><a class="btn btn-danger" th:href="@{/carrinho/remover/{codigo} (codigo = ${item.prato.cod})}"
+								onclick="return confirm('Você tem certeza?')">Excluir</a></td>
+				   
+				    </tr>
+				    
+				</tbody>
+<!-- 				<tr > -->
+<!-- 						<td align="right"> <strong>TOTAL: R$</strong> <small th:text = "${#aggregates.sum(session.carrinho.{item.prato.valor * item.quantidade})}"></small></td> -->
+<!-- 				</tr> -->
+			</table>
+			
+			    <a href="#" class="btn btn-primary">Finalizar Pedido</a>
+			  </div>
+			  <div class="card-footer text-muted">
+					<a th:href="@{/prato/listar}" class="btn btn-secondary my-2" >Adicionar Pratos</a>
+			  </div>
+			</div>
+		
+</body>
+</html>

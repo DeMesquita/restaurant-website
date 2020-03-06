@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th=" http://thymeleaf.org"
+		xmlns:layout=" http://ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+<title>Cadastrar Pratos</title>
+</head>
+<body>
+	<h2 style="text-align: center">Cadastrar Pratos</h2>
+	<br>
+	<form method="post" action="/prato/salvar" enctype="multipart/form-data" th:object="${prato}">
+		<input type="hidden" th:field="*{cod}" />
+		<div class="form-row col-md-8">
+		    <div class="form-group col-md-4">
+		      <label for="inputCity">Nome do Prato</label>
+		      <input type="text" class="form-control"  th:field="*{nome}">
+		    </div>
+		    <div class="form-group col-md-4">
+		      <label for="inputState">Valor do Prato</label>
+		     <input type="text" class="form-control"  th:field="*{valor}">
+		    </div>
+		    <div>
+		    	 <div class="form-group">
+				    <label for="exampleFormControlFile1">Imagem do Prato</label>
+				    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="imagem">
+				  </div>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group col-md-2">
+		  	  <button type="submit" class="btn btn-primary" >Cadastrar Prato</button>
+		  	  <a th:href="@{/prato/listar}" class="btn btn-secondary my-2" >Voltar</a>
+		  </div>
+		
+	</form>
+	<script src="/js/bootstrap.min.js"> </script>
+	
+</body>
+</html>

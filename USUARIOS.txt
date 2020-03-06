@@ -1,0 +1,6 @@
+
+->CLIENTE
+nayara  12345
+nay 123
+
+->GERENTE

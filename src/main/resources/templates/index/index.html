@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>HOME</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+</head>
+<body>
+	<body>
+    <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" th:href="@{/prato/listar}">QUEEN</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+	     
+        <li class="nav-item active">
+          <a class="nav-link" th:href="@{/prato/listar}">Home </a>
+        </li>
+        <li sec:authorize = "hasRole('ROLE_CLIENTE')" class="nav-item">
+          <a class="nav-link" href="#">Pedidos</a>
+        </li>
+         <li sec:authorize = "!isAuthenticated()" class="nav-item">
+              	 <a th:href="@{/cliente/logar}" class="btn btn-light my-2 my-sm-0" > <img  src="https://www.bisturi.net/Portals/0/icon-cart.png" style="width: 30px"></a>
+         </li>
+         <li sec:authorize = "hasRole('ROLE_CLIENTE')" class="nav-item">
+              	 <a th:href="@{/carrinho/index}"class="btn btn-light my-2 my-sm-0" > <img  src="https://www.bisturi.net/Portals/0/icon-cart.png" style="width: 30px"></a>
+         </li>
+         <li>  </li>
+      </ul>
+      
+			
+      <div sec:authorize = "isAuthenticated()"> <a th:href="@{/logout}"> <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">SAIR</button></a> </div>
+      <div sec:authorize = "!isAuthenticated()" >  <a th:href="@{/cliente/cadastrar}"> <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> SING UP</button></a>
+       	<a th:href="@{/cliente/logar}"> <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> LOGIN</button></a> 
+      </div>
+      
+    
+      
+      
+      
+    </div>
+  </nav>
+</header>
+<main role="main">
+
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Pratos</h1>
+      <p sec:authorize = "hasRole('ROLE_GERENTE')">
+        <a  th:href="@{/prato/cadastrar}" class="btn btn-primary my-2">Cadastrar Pratos</a>    
+      </p>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row">
+	        <div class="col-md-4" th:each = "prato : ${listaDePratos}">
+	          <div class="card mb-4 shadow-sm">
+	            <img width="100%" height="225" th:src="@{'/images/'+${prato.nome}+.png}">
+	            <div class="card-body">
+	              <p class="card-text" th:text = "${prato.nome} " > </p>
+	              <p class="card-text" > R$ <span th:text = "${prato.valor} "></span></p>
+	              <div class="d-flex justify-content-between align-items-center">
+	                <div class="btn-group">
+	                <div sec:authorize = "!isAuthenticated()"> 	               		<a class="btn btn-success" th:href="@{/cliente/logar}"> Add Carrinho </a>
+	                </div>
+	                
+	                 <p sec:authorize = "hasRole('ROLE_CLIENTE')"><a class="btn btn-success" th:href="@{/carrinho/comprar/{codigo}(codigo = ${prato.cod})}"> Add Carrinho </a></p>
+	                 <p sec:authorize = "hasRole('ROLE_GERENTE')">
+	                 	<a th:href=" @{/prato/excluir/{codigo}(codigo = ${prato.cod})}" onclick="return confirm('Você tem certeza?')"> <button type="button" class="btn btn-danger">Excluir</button></a>
+	                  	<a class="btn btn-primary" th:href="@{/prato/atualizar/{codigo}(codigo = ${prato.cod})}"> Atualizar </a>
+	                 </p> 
+	               
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+ 	</div>
+ </div>	
+
+</main>
+
+			<footer class="text-muted">
+			  <div class="container">
+			    <p class="float-right">
+			      <a href="#">Topo</a> </p>
+			  </div>
+			   <div class="container">
+			    <p class="float-left">
+			      <a href="#">Área Funcionário</a> </p>
+			  </div>
+			</footer>
+</body>
+</html>
